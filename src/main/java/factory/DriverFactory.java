@@ -15,10 +15,10 @@ public class DriverFactory {
     public DriverFactory(String browser)
     {
         _browser = browser;
-        DriverInitialize();
+        driverInitialize();
     }
 
-    private WebDriver DriverInitialize()
+    private WebDriver driverInitialize()
     {
         switch(_browser)
         {

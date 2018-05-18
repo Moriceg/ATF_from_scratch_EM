@@ -38,41 +38,41 @@ public class LoginTest {
     }
 
     @When("^I enter username as \"(.*)\"$")
-    public void SetUsername(String username)
+    public void setUsername(String username)
     {
         WebElement element = uiMap.getElement(loginPage.Username);
         element.sendKeys(username);
     }
 
     @When("^I enter password as \"(.*)\"$")
-    public void SetPassword(String password)
+    public void setPassword(String password)
     {
         WebElement element = uiMap.getElement(loginPage.Password);
         element.sendKeys(password);
     }
 
     @When("^I click Login button$")
-    public void ClickLogin()
+    public void clickLogin()
     {
         WebElement element = uiMap.getElement(loginPage.SignIn);
         element.click();
     }
 
     @Then("^Login should be successful")
-    public void SuccesfullLogin() throws InterruptedException {
+    public void successfulLogin() throws InterruptedException {
         Assert.assertEquals("User is not on Home Page!", "http://35.205.178.227:3000/", driver.getCurrentUrl());
     }
 
     @But("^Login should fail")
-    public void LoginFail()
+    public void loginFail()
     {
         Assert.assertEquals("User is logged in!", "http://35.205.178.227:3000/login", driver.getCurrentUrl());
     }
 
     @But("^Relogin option should be available")
-    public void CheckAlertMessage()
+    public void checkAlertMessage()
     {
-        WebElement element = uiMap.getElement(loginPage.AllertMessage);
+        WebElement element = uiMap.getElement(loginPage.AlertMessage);
         Assert.assertEquals("Alert message is not displayed!", "Login unsuccessful.", element.getText());
     }
 
