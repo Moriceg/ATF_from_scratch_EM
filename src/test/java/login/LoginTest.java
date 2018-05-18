@@ -1,0 +1,79 @@
+package login;
+
+import cucumber.api.java.After;
+import cucumber.api.java.en.But;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import factory.DriverFactory;
+import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import pageobjects.LoginPageObject;
+import uimap.UiMap;
+import utilities.Constants;
+
+public class LoginTest {
+
+    public WebDriver driver;
+    public String browserForTest = "chrome";
+    public LoginPageObject loginPage;
+    public UiMap uiMap;
+
+    @After
+    public void tearDown()
+    {
+        if(driver != null)
+            driver.quit();
+    }
+
+    @Given("^I am on Tracks login page$")
+    public void navigateToApp()
+    {
+        driver = new DriverFactory(browserForTest).get_driver();
+        driver.manage().window().maximize();
+        loginPage = new LoginPageObject();
+        uiMap = new UiMap(driver);
+        driver.navigate().to(Constants.SYSTEM_UNDERTEST);
+    }
+
+    @When("^I enter username as \"(.*)\"$")
+    public void SetUsername(String username)
+    {
+        WebElement element = uiMap.getElement(loginPage.Username);
+        element.sendKeys(username);
+    }
+
+    @When("^I enter password as \"(.*)\"$")
+    public void SetPassword(String password)
+    {
+        WebElement element = uiMap.getElement(loginPage.Password);
+        element.sendKeys(password);
+    }
+
+    @When("^I click Login button$")
+    public void ClickLogin()
+    {
+        WebElement element = uiMap.getElement(loginPage.SignIn);
+        element.click();
+    }
+
+    @Then("^Login should be successful")
+    public void SuccesfullLogin() throws InterruptedException {
+        Assert.assertEquals("User is not on Home Page!", "http://35.205.178.227:3000/", driver.getCurrentUrl());
+    }
+
+    @But("^Login should fail")
+    public void LoginFail()
+    {
+        Assert.assertEquals("User is logged in!", "http://35.205.178.227:3000/login", driver.getCurrentUrl());
+    }
+
+    @But("^Relogin option should be available")
+    public void CheckAlertMessage()
+    {
+        WebElement element = uiMap.getElement(loginPage.AllertMessage);
+        Assert.assertEquals("Alert message is not displayed!", "Login unsuccessful.", element.getText());
+    }
+
+}
