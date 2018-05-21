@@ -6,11 +6,12 @@ import factory.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import pageobjects.LoginPageObject;
 import uimap.UiMap;
+import utilities.Constants;
 
 public class BaseTest {
 
     public WebDriver driver;
-    public String browserForTest = "chrome";
+    public String browserForTest = Constants.BROWSER;
     public LoginPageObject loginPage;
     public UiMap uiMap;
 

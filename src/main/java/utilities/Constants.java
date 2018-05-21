@@ -8,4 +8,5 @@ public class Constants {
     public static String FIREFOX_DRIVER_DIRECTORY = DRIVERS_DIRECTORY + PATH_TO_DRIVERS + "geckodriver.exe";
 
     public static String SYSTEM_UNDERTEST = "http://35.205.178.227:3000";
+    public static String BROWSER = "chrome";
 }

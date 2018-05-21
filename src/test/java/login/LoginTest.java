@@ -41,21 +41,21 @@ public class LoginTest {
     public void setUsername(String username)
     {
         WebElement element = uiMap.getElement(loginPage.Username);
-        element.sendKeys(username);
+        uiMap.inputData(element, username);
     }
 
     @When("^I enter password as \"(.*)\"$")
     public void setPassword(String password)
     {
         WebElement element = uiMap.getElement(loginPage.Password);
-        element.sendKeys(password);
+        uiMap.inputData(element, password);
     }
 
     @When("^I click Login button$")
     public void clickLogin()
     {
         WebElement element = uiMap.getElement(loginPage.SignIn);
-        element.click();
+        uiMap.click(element);
     }
 
     @Then("^Login should be successful")

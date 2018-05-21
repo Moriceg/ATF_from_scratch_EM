@@ -25,4 +25,31 @@ public class UiMap {
         return _driver.findElement(By.xpath(xPath));
     }
 
+    public void click(WebElement element)
+    {
+        String elementType = element.getAttribute("type");
+        switch (elementType)
+        {
+            case "submit":
+            case "button":
+                element.click();
+                break;
+
+            case "select":
+            case "dropdown":
+                //TO DO
+                break;
+
+            default:
+                element.click();
+                break;
+
+
+        }
+    }
+
+    public void inputData(WebElement element, String value)
+    {
+        element.sendKeys(value);
+    }
 }
