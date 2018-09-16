@@ -1,3 +1,54 @@
 @startuml
-class UiMap
+IUiMap ..> UiMap
+class UiMap {
+-WebDriver _driver
++UiMap(WebDriver driver)
++List<WebElement> getElements()
++WebElement getElement()
++click(String xPath)
++inputData(WebElement element, String xPath)
+}
+class DriverFactory {
+-WebDriver driver
+-String browser
+-DriverFactory(String browser)
+-WebDriver driverInitialize()
++WebDriver getBrowser()
++setDriver(WebDriver driver)
+}
+
+IConfiguration ..> Configuration
+class Configuration{
++loadConfiguration()
++String getConfigurationSection()
++selectConfigurationSection()
++String getItem(String key)
++setItem(String key)
+}
+
+
+BaseTest "1" o-- "many" DriverFactory
+
+class Constants {
++{static}String DRIVERS_DIRECTORY
++{static}String PATH_TO_DRIVERS
++{static}String CHROME_DRIVER_DIRECTORY
++{static}String IE_DRIVER_DIRECTORY
++{static}String FIREFOX_DRIVER_DIRECTORY
++{static}String SYSTEM_UNDERTEST
++{static}String BROWSER
+}
+
+class BaseTest{
++WebDriver driver
++String browserForTest
++LoginPageObject loginPage
++UiMap uiMap
++setUp()
++tearDown()
+}
+
+LoginTest ..> BaseTest
+
+
 @enduml
