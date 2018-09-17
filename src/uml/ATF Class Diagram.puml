@@ -29,7 +29,8 @@ class Configuration{
 }
 
 
-BaseTest "1" o-- "many" DriverFactory
+LoginTest "1" o-- "1" DriverFactory
+BaseTest "1" o-- "1" DriverFactory
 
 class Constants {
 +{static}String DRIVERS_DIRECTORY
@@ -50,6 +51,20 @@ class BaseTest{
 +tearDown()
 }
 
-UiMap -->  BaseTest
+
+class LoginTest{
++WebDriver driver
++String browserForTest
++LoginPageObject loginPage
++UiMap uiMap
++setUp()
++tearDown()
+--
+Others test methods
+}
+
+UiMap -->  LoginTest
+Constants --> LoginTest
+Constants --> BaseTest
 
 @enduml

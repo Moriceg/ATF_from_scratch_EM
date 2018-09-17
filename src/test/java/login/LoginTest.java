@@ -16,7 +16,7 @@ import utilities.Constants;
 public class LoginTest {
 
     public WebDriver driver;
-    public String browserForTest = "chrome";
+    public String browserForTest = Constants.BROWSER;
     public LoginPageObject loginPage;
     public UiMap uiMap;
 

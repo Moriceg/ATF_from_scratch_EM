@@ -1,11 +1,40 @@
 @startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
 
 
+LoginTest -> DriverFactory : Initiate Driver
+DriverFactory --> LoginTest : return Driver
+LoginTest -> Application : Go to login page
+Application --> LoginTest : OK
+LoginTest -> UiMap : Enter Username
+UiMap --> WebDriver : get username web element
+WebDriver --> Application : get element by xpath
+Application -> WebDriver : return web element
+WebDriver --> UiMap : return element
+UiMap -> Application : send value
 
+Application --> LoginTest : OK
+LoginTest -> UiMap : Enter Password
+UiMap --> WebDriver : get username web element
+WebDriver --> Application : get element by xpath
+Application -> WebDriver : return web element
+WebDriver --> UiMap : return element
+UiMap -> Application : send value
+Application --> LoginTest : OK
+
+LoginTest -> UiMap : Click Login
+UiMap --> WebDriver : get login button web element
+WebDriver --> Application : get element by xpath
+Application -> WebDriver : return web element
+WebDriver --> UiMap : return element
+UiMap -> Application : Click login button
+Application --> LoginTest : Click provided
+
+LoginTest -> JUnit : Validate user is successful logged
+JUnit --> Application : Get current URL
+Application -> JUnit : Return URL
+JUnit --> LoginTest : Validate expected vs actual
+
+LoginTest -> WebDriver : Close browser
+WebDriver --> LoginTest : OK
 
 @enduml
