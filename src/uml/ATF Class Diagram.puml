@@ -1,5 +1,6 @@
 @startuml
 IUiMap ..> UiMap
+
 class UiMap {
 -WebDriver _driver
 +UiMap(WebDriver driver)
@@ -8,6 +9,7 @@ class UiMap {
 +click(String xPath)
 +inputData(WebElement element, String xPath)
 }
+
 class DriverFactory {
 -WebDriver driver
 -String browser
@@ -48,7 +50,6 @@ class BaseTest{
 +tearDown()
 }
 
-LoginTest ..> BaseTest
-
+UiMap -->  BaseTest
 
 @enduml
