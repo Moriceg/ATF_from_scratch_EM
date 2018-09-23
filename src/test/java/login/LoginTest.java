@@ -5,20 +5,19 @@ import cucumber.api.java.en.But;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import factory.DriverFactory;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pageobjects.LoginPageObject;
-import uimap.UiMap;
 import utilities.Constants;
 
-public class LoginTest {
+public class LoginTest extends BaseTest {
 
-    public WebDriver driver;
-    public String browserForTest = Constants.BROWSER;
     public LoginPageObject loginPage;
-    public UiMap uiMap;
+    public LoginTest()
+    {
+        loginPage = new LoginPageObject();
+        initialize();
+    }
 
     @After
     public void tearDown()
@@ -30,10 +29,6 @@ public class LoginTest {
     @Given("^I am on Tracks login page$")
     public void navigateToApp()
     {
-        driver = new DriverFactory(browserForTest).get_driver();
-        driver.manage().window().maximize();
-        loginPage = new LoginPageObject();
-        uiMap = new UiMap(driver);
         driver.navigate().to(Constants.SYSTEM_UNDERTEST);
     }
 

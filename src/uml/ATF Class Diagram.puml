@@ -65,6 +65,6 @@ Others test methods
 
 UiMap -->  LoginTest
 Constants --> LoginTest
-Constants --> BaseTest
 Constants --> DriverFactory
+LoginTest <|-- BaseTest
 @enduml

@@ -11,10 +11,11 @@ public class DriverFactory {
 
     private WebDriver _driver;
     private String _browser;
+    public String browserForTest = Constants.BROWSER;
 
-    public DriverFactory(String browser)
+    public DriverFactory()
     {
-        _browser = browser;
+        _browser =  browserForTest;
         driverInitialize();
     }
 
@@ -53,11 +54,18 @@ public class DriverFactory {
         return _driver;
     }
 
-    public WebDriver get_driver() {
+    public WebDriver get_driver()
+    {
         return _driver;
     }
 
-    public void set_driver(WebDriver _driver) {
+    public void set_driver(WebDriver _driver)
+    {
         this._driver = _driver;
+    }
+
+    public void quit()
+    {
+        _driver.quit();
     }
 }
