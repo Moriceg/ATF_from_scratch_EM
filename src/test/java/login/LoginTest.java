@@ -5,23 +5,50 @@ import cucumber.api.java.en.But;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import factory.DriverFactory;
 import org.junit.Assert;
+import org.junit.Before;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 import pageobjects.LoginPageObject;
+import uimap.UiMap;
 import utilities.Constants;
 
-public class LoginTest extends BaseTest {
+import javax.annotation.PostConstruct;
 
-    public LoginPageObject loginPage;
-    public LoginTest()
+@Component
+public class LoginTest{
+
+    public UiMap uiMap;
+    public Constants constants;
+    public WebDriver driver;
+    public DriverFactory driverFactory;
+    private LoginPageObject loginPageObject;
+
+    public LoginTest(){}
+
+    @Autowired
+    public LoginTest(LoginPageObject loginPageObject, UiMap uiMap, DriverFactory driverFactory, Constants constants)
     {
-        loginPage = new LoginPageObject();
-        initialize();
+        this.loginPageObject = loginPageObject;
+        this.uiMap = uiMap;
+        this.driverFactory = driverFactory;
+        this.constants = constants;
+    }
+
+    @Before
+    public void setUp(){
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext(new String[] {"beans.xml"});
+        driverFactory = (DriverFactory) context.getBean("driverFactory");
     }
 
     @After
-    public void tearDown()
-    {
+    public void tearDown(){
         if(driver != null)
             driver.quit();
     }
@@ -29,32 +56,33 @@ public class LoginTest extends BaseTest {
     @Given("^I am on Tracks login page$")
     public void navigateToApp()
     {
-        driver.navigate().to(Constants.SYSTEM_UNDERTEST);
+        driver = driverFactory.getDriver();
+        driver.navigate().to(constants.SYSTEM_UNDERTEST);
     }
 
     @When("^I enter username as \"(.*)\"$")
     public void setUsername(String username)
     {
-        WebElement element = uiMap.getElement(loginPage.Username);
+        WebElement element = uiMap.getElement(loginPageObject.Username);
         uiMap.inputData(element, username);
     }
 
     @When("^I enter password as \"(.*)\"$")
     public void setPassword(String password)
     {
-        WebElement element = uiMap.getElement(loginPage.Password);
+        WebElement element = uiMap.getElement(loginPageObject.Password);
         uiMap.inputData(element, password);
     }
 
     @When("^I click Login button$")
     public void clickLogin()
     {
-        WebElement element = uiMap.getElement(loginPage.SignIn);
+        WebElement element = uiMap.getElement(loginPageObject.SignIn);
         uiMap.click(element);
     }
 
     @Then("^Login should be successful")
-    public void successfulLogin() throws InterruptedException {
+    public void successfulLogin() {
         Assert.assertEquals("User is not on Home Page!", "http://35.205.178.227:3000/", driver.getCurrentUrl());
     }
 
@@ -65,10 +93,8 @@ public class LoginTest extends BaseTest {
     }
 
     @But("^Relogin option should be available")
-    public void checkAlertMessage()
-    {
-        WebElement element = uiMap.getElement(loginPage.AlertMessage);
+    public void checkAlertMessage() {
+        WebElement element = uiMap.getElement(loginPageObject.AlertMessage);
         Assert.assertEquals("Alert message is not displayed!", "Login unsuccessful.", element.getText());
     }
-
 }
