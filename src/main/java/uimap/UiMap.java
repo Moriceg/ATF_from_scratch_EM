@@ -11,6 +11,8 @@ public class UiMap implements IUiMap {
 
     private WebDriver _driver;
 
+    public UiMap(){}
+
     public UiMap(WebDriver driver)
     {
         _driver = driver;

@@ -5,67 +5,76 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import utilities.Constants;
 
 public class DriverFactory {
 
-    private WebDriver _driver;
-    private String _browser;
-    public String browserForTest = Constants.BROWSER;
+    public WebDriver getDriver() {
+        return driverInitialize();
+    }
+    private WebDriver driver;
 
-    public DriverFactory()
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
+
+    public String browser;
+    public Constants constants;
+
+    public DriverFactory(){}
+    @Autowired
+    public DriverFactory(String browser, Constants constants)
     {
-        _browser =  browserForTest;
-        driverInitialize();
+        this.browser = browser;
+        this.constants = constants;
     }
 
     private WebDriver driverInitialize()
     {
-        switch(_browser)
+        switch(browser)
         {
             case "firefox":
             {
-                String path = Constants.FIREFOX_DRIVER_DIRECTORY;
+                String path = constants.FIREFOX_DRIVER_DIRECTORY;
                 System.setProperty("webdriver.gecko.driver", path);
-                _driver =  new FirefoxDriver();
+                driver =  new FirefoxDriver();
                 break;
             }
 
             case "ie":
             {
-                String path = Constants.IE_DRIVER_DIRECTORY;
+                String path = constants.IE_DRIVER_DIRECTORY;
                 System.setProperty("webdriver.ie.driver", path);
                 InternetExplorerOptions ieOptions = new InternetExplorerOptions();
                 ieOptions.ignoreZoomSettings();
                 ieOptions.introduceFlakinessByIgnoringSecurityDomains();
                 ieOptions.withInitialBrowserUrl("about:blank");
-                _driver =  new InternetExplorerDriver(ieOptions);
+                driver =  new InternetExplorerDriver(ieOptions);
                 break;
             }
 
             default:
             {
-                String path = Constants.CHROME_DRIVER_DIRECTORY;
+                String path = constants.CHROME_DRIVER_DIRECTORY;
                 System.setProperty("webdriver.chrome.driver", path);
-                _driver = new ChromeDriver();
+                driver = new ChromeDriver();
                 break;
             }
         }
-        return _driver;
-    }
-
-    public WebDriver get_driver()
-    {
-        return _driver;
-    }
-
-    public void set_driver(WebDriver _driver)
-    {
-        this._driver = _driver;
+        return driver;
     }
 
     public void quit()
     {
-        _driver.quit();
+        driver.quit();
     }
 }

@@ -1,0 +1,12 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-5.0.9.xsd">
+
+<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    <!-- bean definitions here -->
+    <bean id="driverFactory" class="src.main.java.factory.DriverFactory"></bean>
+    <bean id = "loginPageObject" class = "src.main.java.pageobjects.LoginPageObject"></bean>
+    <bean id = "loginTest" class = "src.main.test.java.login.LoginTest"></bean>
+
+</beans>
