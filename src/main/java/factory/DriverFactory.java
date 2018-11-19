@@ -5,13 +5,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
-import org.springframework.beans.factory.annotation.Autowired;
 import utilities.Constants;
 
 public class DriverFactory {
 
     public WebDriver getDriver() {
-        return driverInitialize();
+        return driver;
     }
     private WebDriver driver;
 
@@ -31,14 +30,14 @@ public class DriverFactory {
     public Constants constants;
 
     public DriverFactory(){}
-    @Autowired
+
     public DriverFactory(String browser, Constants constants)
     {
         this.browser = browser;
         this.constants = constants;
     }
 
-    private WebDriver driverInitialize()
+    public WebDriver driverInitialize()
     {
         switch(browser)
         {

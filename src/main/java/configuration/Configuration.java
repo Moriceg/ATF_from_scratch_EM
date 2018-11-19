@@ -4,7 +4,6 @@ import interfaces.IConfiguration;
 
 public class Configuration implements IConfiguration{
 
-
     @Override
     public void loadConfiguration() {
 

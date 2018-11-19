@@ -1,4 +1,4 @@
-Feature: annotation
+Feature: login
 #This is how background can be used to eliminate duplicate steps
 
 Background:

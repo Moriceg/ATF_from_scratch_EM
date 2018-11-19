@@ -9,25 +9,25 @@ import java.util.List;
 
 public class UiMap implements IUiMap {
 
-    private WebDriver _driver;
+    private WebDriver driver;
 
     public UiMap(){}
 
     public UiMap(WebDriver driver)
     {
-        _driver = driver;
+        this.driver = driver;
     }
 
     @Override
     public List<WebElement> getElements(String xPath)
     {
-        return _driver.findElements(By.xpath(xPath));
+        return driver.findElements(By.xpath(xPath));
     }
 
     @Override
     public WebElement getElement(String xPath)
     {
-        return _driver.findElement(By.xpath(xPath));
+        return driver.findElement(By.xpath(xPath));
     }
 
     @Override

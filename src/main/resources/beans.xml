@@ -6,11 +6,11 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- <context:annotation-config/> -->
     <!-- bean definitions here -->
     <bean id="loginTest" class="login.LoginTest">
         <constructor-arg ref="loginPageObject"/>
-        <constructor-arg ref="uiMap"/>
-        <constructor-arg ref = "driverFactory"/>
+        <constructor-arg ref="driverFactory"/>
         <constructor-arg ref="constants"/>
     </bean>
 
@@ -20,6 +20,7 @@
     </bean>
 
     <bean id="uiMap" class="uimap.UiMap"></bean>
-    <bean id="constants" class="utilities.Constants"></bean>
-    <bean id="loginPageObject" class="pageobjects.LoginPageObject"></bean>
+    <bean id="constants" class="utilities.Constants"/>
+    <bean id="loginPageObject" class="pageobjects.LoginPageObject"/>
+
 </beans>

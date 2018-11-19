@@ -1,8 +1,5 @@
 package pageobjects;
 
-import org.springframework.stereotype.Component;
-
-@Component("loginPageObject")
 public class LoginPageObject {
 
     public String Username = ".//*[@id='user_login']";

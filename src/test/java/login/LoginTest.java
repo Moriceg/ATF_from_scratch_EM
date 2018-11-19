@@ -1,5 +1,6 @@
 package login;
 
+import cucumber.api.java.Before;
 import cucumber.api.java.After;
 import cucumber.api.java.en.But;
 import cucumber.api.java.en.Given;
@@ -7,21 +8,16 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import factory.DriverFactory;
 import org.junit.Assert;
-import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
 import pageobjects.LoginPageObject;
 import uimap.UiMap;
 import utilities.Constants;
 
-import javax.annotation.PostConstruct;
-
-@Component
 public class LoginTest{
+    public LoginTest(){}
 
     public UiMap uiMap;
     public Constants constants;
@@ -29,22 +25,19 @@ public class LoginTest{
     public DriverFactory driverFactory;
     private LoginPageObject loginPageObject;
 
-    public LoginTest(){}
-
-    @Autowired
-    public LoginTest(LoginPageObject loginPageObject, UiMap uiMap, DriverFactory driverFactory, Constants constants)
+    public LoginTest(LoginPageObject loginPageObject, DriverFactory driverFactory, Constants constants)
     {
         this.loginPageObject = loginPageObject;
-        this.uiMap = uiMap;
         this.driverFactory = driverFactory;
         this.constants = constants;
+        driverFactory.driverInitialize();
     }
 
     @Before
     public void setUp(){
-        ApplicationContext context =
-                new ClassPathXmlApplicationContext(new String[] {"beans.xml"});
-        driverFactory = (DriverFactory) context.getBean("driverFactory");
+        ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"beans.xml"});
+        driver = driverFactory.getDriver();
+        uiMap = new UiMap(driver);
     }
 
     @After
@@ -56,7 +49,6 @@ public class LoginTest{
     @Given("^I am on Tracks login page$")
     public void navigateToApp()
     {
-        driver = driverFactory.getDriver();
         driver.navigate().to(constants.SYSTEM_UNDERTEST);
     }
 
