@@ -4,13 +4,10 @@ import com.atf.interfaces.IUiMap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 public class UiMap implements IUiMap {
-
 
     public UiMap(WebDriver driver)
     {
