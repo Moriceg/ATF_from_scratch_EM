@@ -1,22 +1,23 @@
-package uimap;
+package com.atf.uimap;
 
-import interfaces.IUiMap;
+import com.atf.interfaces.IUiMap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class UiMap implements IUiMap {
 
-    private WebDriver driver;
-
-    public UiMap(){}
 
     public UiMap(WebDriver driver)
     {
         this.driver = driver;
     }
+
+    private WebDriver driver;
 
     @Override
     public List<WebElement> getElements(String xPath)

@@ -1,5 +1,8 @@
-package utilities;
+package com.atf.utilities;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Constants {
     public String DRIVERS_DIRECTORY = System.getProperty("user.dir");
     public String PATH_TO_DRIVERS = "\\src\\main\\resources\\drivers\\";

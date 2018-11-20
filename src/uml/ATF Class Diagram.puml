@@ -29,8 +29,7 @@ class Configuration{
 }
 
 
-LoginTest "1" o-- "1" DriverFactory
-BaseTest "1" o-- "1" DriverFactory
+com.atf.LoginTest "1" o-- "1" DriverFactory
 
 class Constants {
 +{static}String DRIVERS_DIRECTORY
@@ -42,17 +41,7 @@ class Constants {
 +{static}String BROWSER
 }
 
-class BaseTest{
-+WebDriver driver
-+String browserForTest
-+LoginPageObject loginPage
-+UiMap uiMap
-+setUp()
-+tearDown()
-}
-
-
-class LoginTest{
+class com.atf.LoginTest{
 +WebDriver driver
 +String browserForTest
 +LoginPageObject loginPage
@@ -63,8 +52,7 @@ class LoginTest{
 Others test methods
 }
 
-UiMap -->  LoginTest
-Constants --> LoginTest
+UiMap -->  com.atf.LoginTest
+Constants --> com.atf.LoginTest
 Constants --> DriverFactory
-LoginTest <|-- BaseTest
 @enduml

@@ -1,6 +1,6 @@
-package configuration;
+package com.atf.configuration;
 
-import interfaces.IConfiguration;
+import com.atf.interfaces.IConfiguration;
 
 public class Configuration implements IConfiguration{
 

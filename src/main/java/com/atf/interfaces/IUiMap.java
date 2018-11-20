@@ -1,4 +1,4 @@
-package interfaces;
+package com.atf.interfaces;
 
 import org.openqa.selenium.WebElement;
 

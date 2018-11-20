@@ -1,41 +1,36 @@
-package login;
+package com.atf;
 
+import com.atf.factory.DriverFactory;
 import cucumber.api.java.Before;
 import cucumber.api.java.After;
 import cucumber.api.java.en.But;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import factory.DriverFactory;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import pageobjects.LoginPageObject;
-import uimap.UiMap;
-import utilities.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.atf.pageobjects.LoginPageObject;
+import com.atf.uimap.UiMap;
+import com.atf.utilities.Constants;
+import org.springframework.test.context.ContextConfiguration;
 
-public class LoginTest{
-    public LoginTest(){}
+@ContextConfiguration(classes =  {com.atf.AppConfig.class})
+public class LoginTest {
 
-    public UiMap uiMap;
+    private UiMap uiMap;
+    private WebDriver driver;
+    @Autowired
     public Constants constants;
-    public WebDriver driver;
+    @Autowired
     public DriverFactory driverFactory;
-    private LoginPageObject loginPageObject;
-
-    public LoginTest(LoginPageObject loginPageObject, DriverFactory driverFactory, Constants constants)
-    {
-        this.loginPageObject = loginPageObject;
-        this.driverFactory = driverFactory;
-        this.constants = constants;
-        driverFactory.driverInitialize();
-    }
+    @Autowired
+    public LoginPageObject loginPageObject;
 
     @Before
     public void setUp(){
-        ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"beans.xml"});
+        driverFactory.driverInitialize();
         driver = driverFactory.getDriver();
         uiMap = new UiMap(driver);
     }

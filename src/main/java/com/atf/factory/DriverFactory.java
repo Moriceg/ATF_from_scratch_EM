@@ -1,22 +1,24 @@
-package factory;
+package com.atf.factory;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
-import utilities.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+import com.atf.utilities.Constants;
 
+@Component
+@PropertySource("classpath:environment.properties")
 public class DriverFactory {
 
     public WebDriver getDriver() {
         return driver;
     }
     private WebDriver driver;
-
-    public void setDriver(WebDriver driver) {
-        this.driver = driver;
-    }
 
     public String getBrowser() {
         return browser;
@@ -26,16 +28,10 @@ public class DriverFactory {
         this.browser = browser;
     }
 
+    @Value("${defaultBrowser}")
     public String browser;
+    @Autowired
     public Constants constants;
-
-    public DriverFactory(){}
-
-    public DriverFactory(String browser, Constants constants)
-    {
-        this.browser = browser;
-        this.constants = constants;
-    }
 
     public WebDriver driverInitialize()
     {
