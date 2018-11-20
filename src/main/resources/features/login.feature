@@ -13,10 +13,16 @@ Scenario:
    Then Login should be successful
 
 #Scenario negative login
-   Scenario:
-      When I enter username as "TOM"
-      And I enter password as "Jerry"
+   Scenario Outline:
+      When I enter username as "<username>"
+      And I enter password as "<password>"
       When I click Login button
       Then Login should fail
       But Relogin option should be available
+
+      Examples:
+         | username | password |
+         | TOM      | Jerry    |
+         |          | pass1    |
+         | test     | test     |
 
