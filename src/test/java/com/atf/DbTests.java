@@ -4,7 +4,6 @@ import com.atf.jdbc.Dao;
 import com.atf.jdbc.Sales;
 import com.atf.jdbc.SalesDao;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Date;
@@ -17,7 +16,7 @@ public class DbTests {
     @Test
     public void GetOrderDetails()
     {
-        Sales sales = new Sales();
+        Sales sales;
         Dao<Sales> dao = new SalesDao();
         sales = dao.get(26278);
 
@@ -62,5 +61,15 @@ public class DbTests {
             Sales sales = iterator.next();
             System.out.println(sales.ToString());
         }
+    }
+
+    @Test
+    public void DeleteAllRecords()
+    {
+        Dao<Sales> dao = new SalesDao();
+        dao.deleteAll();
+        List<Sales> allSales = dao.getAll();
+        Assert.assertEquals("The records were not deleted!", 0, allSales.size());
+
     }
 }
