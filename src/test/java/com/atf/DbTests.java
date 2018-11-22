@@ -3,16 +3,18 @@ package com.atf;
 import com.atf.jdbc.Dao;
 import com.atf.jdbc.Sales;
 import com.atf.jdbc.SalesDao;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class DbTests {
 
     @Test
-    @Ignore
     public void GetOrderDetails()
     {
         Sales sales = new Sales();
@@ -38,5 +40,27 @@ public class DbTests {
 
         dao.save(sales);
         System.out.println(sales.ToString());
+
+        Sales savedSale = dao.get(sales.getSalesOrderID());
+        Assert.assertEquals("Sales was saved wrong!", sales.getSalesOrderDetailID(), savedSale.getSalesOrderDetailID());
+    }
+
+    @Test
+    public void GetAllSales()
+    {
+        Dao<Sales> dao = new SalesDao();
+        List<Sales> allSales = dao.getAll();
+        Iterator<Sales> iterator = allSales.iterator();
+        if(allSales.size() == 0)
+        {
+            System.out.println("No records found or something went wrong during information retrieve!");
+            return;
+        }
+        System.out.println("Records found: " + allSales.size());
+        while(iterator.hasNext())
+        {
+            Sales sales = iterator.next();
+            System.out.println(sales.ToString());
+        }
     }
 }

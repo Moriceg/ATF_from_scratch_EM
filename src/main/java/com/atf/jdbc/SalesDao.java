@@ -10,6 +10,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.junit.Assert;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalesDao implements Dao<Sales>{
@@ -35,18 +37,40 @@ public class SalesDao implements Dao<Sales>{
 
     @Override
     public Sales get(int id) {
+        Sales sales = new Sales();
         OpenConnection();
-        transaction = session.beginTransaction();
-        Sales sales = session.get(Sales.class, id);
-        transaction.commit();
-        session.close();
-        return sales;
+        try {
+            transaction = session.beginTransaction();
+            sales = session.get(Sales.class, id);
+            transaction.commit();
+        }
+        catch (Exception ex) {
+            Assert.assertTrue(ex.getCause().getMessage(), false);
+        }
+        finally {
+            session.close();
+            return sales;
+        }
     }
 
     @Override
     public List<Sales> getAll() {
+        String query = "FROM Sales";
         OpenConnection();
-        return null;
+        List<Sales> allSales = new ArrayList <>();
+        try {
+            transaction = session.beginTransaction();
+            allSales.addAll(session.createQuery(query, Sales.class).list());
+            transaction.commit();
+        }
+        catch (Exception ex)
+        {
+            Assert.assertTrue(ex.getCause().getMessage(), false);
+        }
+        finally {
+            session.close();
+            return allSales;
+        }
     }
 
     @Override
@@ -57,8 +81,7 @@ public class SalesDao implements Dao<Sales>{
             session.save(sales);
             transaction.commit();
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             Assert.assertTrue(ex.getCause().getMessage(), false);
         }
         finally {

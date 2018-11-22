@@ -92,7 +92,7 @@ public class Sales implements Serializable {
 
     public String ToString()
     {
-        return "SalesOrderID: " + getSalesOrderID() + ", SalesOrderID: " + getSalesOrderDetailID() + ", OrderQty: " + getOrderQty() +
+        return "SalesOrderID: " + getSalesOrderID() + " SalesOrderID: " + getSalesOrderDetailID() + " OrderQty: " + getOrderQty() +
                 " ProductID: " + getProductID() + " UnitPrice: " + getUnitPrice() + " UnitPriceDiscount: " + getUnitPriceDiscount() +
                 " RowGuid: " + getRowguid() + " DateOfOrder: " + getModifiedDate();
     }
