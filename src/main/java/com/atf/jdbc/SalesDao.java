@@ -20,7 +20,7 @@ public class SalesDao implements Dao<Sales>{
     private SessionFactory factory;
     private Session session;
     private Transaction transaction;
-    private final String deleteQuery  = "delete from Sales;";
+    private String deleteQuery  = "delete from Sales;";
 
     private void OpenConnection()
     {
@@ -38,7 +38,7 @@ public class SalesDao implements Dao<Sales>{
     }
 
     @Transactional
-    private void PrepareDatabase()
+    public void prepareDatabase()
     {
         String testData = "INSERT INTO Sales (SalesOrderID,SalesOrderDetailID,OrderQty,ProductID,UnitPrice,UnitPriceDiscount,rowguid,ModifiedDate) " +
                 "VALUES (26271,110562,1,836,356.89,0.00,'1','2008-06-01 00:00:00.000'), " +
@@ -64,9 +64,8 @@ public class SalesDao implements Dao<Sales>{
 
     @Override
     public Sales get(int id) {
-        PrepareDatabase();
-        if(session == null) OpenConnection();
-        Sales sales = new Sales();
+        if(session == null || !session.isConnected()) OpenConnection();
+        Sales sales = null;
         try {
             transaction = session.beginTransaction();
             sales = session.get(Sales.class, id);
@@ -84,9 +83,8 @@ public class SalesDao implements Dao<Sales>{
 
     @Override
     public List<Sales> getAll() {
-        PrepareDatabase();
         String query = "FROM Sales";
-        if(session == null) OpenConnection();
+        if(session == null || !session.isConnected()) OpenConnection();
         List<Sales> allSales = new ArrayList <>();
         try {
             transaction = session.beginTransaction();
@@ -106,7 +104,7 @@ public class SalesDao implements Dao<Sales>{
 
     @Override
     public void save(Sales sales) {
-        OpenConnection();
+        if(session == null || !session.isConnected()) OpenConnection();
         try {
             transaction = session.beginTransaction();
             session.save(sales);
@@ -123,8 +121,8 @@ public class SalesDao implements Dao<Sales>{
 
     @Override
     public void update(Sales sales) {
-        PrepareDatabase();
-        if(session == null) OpenConnection();
+        //TO DO Add PrepareDatabase
+        if(session == null || !session.isConnected()) OpenConnection();
         try {
             transaction = session.beginTransaction();
             session.update(sales);

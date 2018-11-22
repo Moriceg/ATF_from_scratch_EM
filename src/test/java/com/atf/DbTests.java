@@ -16,9 +16,11 @@ public class DbTests {
     @Test
     public void GetOrderDetails()
     {
+        int orderID = 26278;
         Sales sales;
         Dao<Sales> dao = new SalesDao();
-        sales = dao.get(26278);
+        dao.prepareDatabase();
+        sales = dao.get(orderID);
 
         System.out.println(sales.ToString());
     }
@@ -36,18 +38,18 @@ public class DbTests {
         sales.setRowguid(new Random().nextInt(20));
         sales.setModifiedDate(new Date());
         Dao<Sales> dao = new SalesDao();
-
         dao.save(sales);
         System.out.println(sales.ToString());
-
         Sales savedSale = dao.get(sales.getSalesOrderID());
         Assert.assertEquals("Sales was saved wrong!", sales.getSalesOrderDetailID(), savedSale.getSalesOrderDetailID());
+        System.out.print("Item " + sales.getSalesOrderID() + " saved.");
     }
 
     @Test
     public void GetAllSales()
     {
         Dao<Sales> dao = new SalesDao();
+        dao.prepareDatabase();
         List<Sales> allSales = dao.getAll();
         Iterator<Sales> iterator = allSales.iterator();
         if(allSales.size() == 0)
@@ -67,9 +69,26 @@ public class DbTests {
     public void DeleteAllRecords()
     {
         Dao<Sales> dao = new SalesDao();
+        dao.prepareDatabase();
         dao.deleteAll();
         List<Sales> allSales = dao.getAll();
         Assert.assertEquals("The records were not deleted!", 0, allSales.size());
+        System.out.print("Table is clear.");
 
+    }
+
+    @Test
+    public void updateOrder()
+    {
+        int orderID = 26274;
+        Dao<Sales> dao = new SalesDao();
+        dao.prepareDatabase();
+        Sales oldSales = dao.get(orderID);
+        oldSales.setUnitPrice(9999.99);
+        dao.update(oldSales);
+        System.out.println("Old Unit price : " + oldSales.getUnitPrice());
+        System.out.println("New Unit price : " + oldSales.getUnitPrice());
+        Sales updatedSale = dao.get(orderID);
+        if(oldSales.getUnitPrice() == updatedSale.getUnitPrice()) System.out.print("Sales updated!"); else System.out.print("Sales was not updated!");
     }
 }

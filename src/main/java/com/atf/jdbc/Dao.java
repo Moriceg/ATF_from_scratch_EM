@@ -10,4 +10,5 @@ public interface Dao<T> {
     void update(T t);
     void delete(T t);
     void deleteAll();
+    void prepareDatabase();
 }
