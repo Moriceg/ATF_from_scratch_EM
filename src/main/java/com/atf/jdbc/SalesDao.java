@@ -1,6 +1,5 @@
 package com.atf.jdbc;
 
-import cucumber.api.java.eo.Se;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,10 +8,9 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
+import org.junit.Assert;
 
 import java.util.List;
-import java.util.Optional;
 
 public class SalesDao implements Dao<Sales>{
 
@@ -54,10 +52,18 @@ public class SalesDao implements Dao<Sales>{
     @Override
     public void save(Sales sales) {
         OpenConnection();
-        transaction = session.beginTransaction();
-        session.save(sales);
-        transaction.commit();
-        session.close();
+        try {
+            transaction = session.beginTransaction();
+            session.save(sales);
+            transaction.commit();
+        }
+        catch (Exception ex)
+        {
+            Assert.assertTrue(ex.getCause().getMessage(), false);
+        }
+        finally {
+            session.close();
+        }
     }
 
     @Override

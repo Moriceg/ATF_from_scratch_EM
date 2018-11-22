@@ -1,5 +1,4 @@
 package com.atf.jdbc;
-import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,23 +9,21 @@ import java.util.Date;
 @IdClass(Sales.class)
 public class Sales implements Serializable {
 
-    @Column(name = "SalesOrderID") @NotNull
+    //@Column(name = "SalesOrderID", nullable = false)
     private int SalesOrderID;
-    @Id
-    @GeneratedValue
-    @Column(name = "SalesOrderDetailID") @NotNull
+    //@Column(name = "SalesOrderDetailID",  nullable = false)
     private int SalesOrderDetailID;
-    @Column(name = "OrderQty") @NotNull
+    //@Column(name = "OrderQty", nullable = false)
     private short OrderQty;
-    @Column(name = "ProductID") @NotNull
+    //@Column(name = "ProductID", nullable = false)
     private int ProductID;
-    @Column(name = "UnitPrice") @NotNull
+    //@Column(name = "UnitPrice", nullable = false)
     private double UnitPrice;
-    @Column(name = "UnitPriceDiscount") @NotNull
+    //@Column(name = "UnitPriceDiscount", nullable = false)
     private double UnitPriceDiscount;
-    @Column(name = "rowguid") @NotNull
+    //@Column(name = "rowguid", nullable = false)
     private int rowguid;
-    @Column(name = "ModifiedDate") @NotNull
+    //@Column(name = "ModifiedDate", nullable = false)
     private Date ModifiedDate;
 
     public int getSalesOrderID() {
