@@ -66,7 +66,7 @@ public class DbTests {
     }
 
     @Test
-    public void DeleteAllRecords()
+    public void deleteAllRecords()
     {
         Dao<Sales> dao = new SalesDao();
         dao.prepareDatabase();
@@ -90,5 +90,18 @@ public class DbTests {
         System.out.println("New Unit price : " + oldSales.getUnitPrice());
         Sales updatedSale = dao.get(orderID);
         if(oldSales.getUnitPrice() == updatedSale.getUnitPrice()) System.out.print("Sales updated!"); else System.out.print("Sales was not updated!");
+    }
+
+    @Test
+    public void deleteOrder()
+    {
+        int orderToDelete = 26272;
+        Dao<Sales> dao = new SalesDao();
+        dao.prepareDatabase();
+        int beforeDeleteCount = dao.getAll().size();
+        Sales order = dao.get(orderToDelete);
+        dao.delete(order);
+        int afterDeleteCount = dao.getAll().size();
+        Assert.assertEquals("Order was not deleted!", afterDeleteCount, beforeDeleteCount - 1);
     }
 }

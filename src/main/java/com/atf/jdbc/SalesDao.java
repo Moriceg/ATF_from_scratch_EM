@@ -139,7 +139,19 @@ public class SalesDao implements Dao<Sales>{
 
     @Override
     public void delete(Sales sales) {
-
+        if(session == null || !session.isConnected()) OpenConnection();
+        try {
+            transaction = session.beginTransaction();
+            session.delete(sales);
+            transaction.commit();
+        }
+        catch (Exception ex) {
+            Assert.assertTrue(ex.getCause().getMessage(), false);
+            if(transaction != null) transaction.rollback();
+        }
+        finally {
+            session.close();
+        }
     }
 
     @Override
