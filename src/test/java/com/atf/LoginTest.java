@@ -28,14 +28,14 @@ public class LoginTest {
     @Autowired
     public LoginPageObject loginPageObject;
 
-    @Before
+    @Before(order = 1, value = "@UI")
     public void setUp(){
         driverFactory.driverInitialize();
         driver = driverFactory.getDriver();
         uiMap = new UiMap(driver);
     }
 
-    @After
+    @After(value = "@UI")
     public void tearDown(){
         if(driver != null)
             driver.quit();
